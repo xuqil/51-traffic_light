@@ -45,6 +45,8 @@ void main()
 {	smg_1 = 1;
 	smg_2 = 1;
 	Time0_init();
+	SMG_XS=Data[10];
+	delay(300);
  while(1)
  {
  	;
@@ -154,8 +156,8 @@ void Time0_init()				//定时器0初始化函数
 
 void Time0() interrupt 1						//定时器0中断服务函数
 {
-	//static uchar time = 0;
-	static uchar flag_num = 0;
+	static uchar flag_num2 = 5;
+	static uchar flag_num = 30;
 //	uchar m_s_time = 0;
 //	uchar s_m_time = 0;
 //	uchar slave_time = 0;
@@ -164,16 +166,26 @@ void Time0() interrupt 1						//定时器0中断服务函数
 	TL0 = (65536-50000)%256;
 	time_num ++;									//时间基数加1
 	if(flag_master) // 主干
-	{		 
+	{	 
 		 south_north();
 		 if(time_num == 20)//1s
 		 {
+		 	smg_1 = 1;
+			smg_2 = 1;
 		 	time_num = 0;
-		 	flag_num ++;
-			if(flag_num == 6)
+			flag_num --;
+			SMG_XS = Data[flag_num/10];
+			//smg_2 = 0;
+			delay(30);  
+			smg_2 = 1;
+			SMG_XS = Data[flag_num%10];
+			smg_1 = 0;
+			delay(30); 	
+			smg_1 = 1;
+			if(flag_num == 0)
 			{
 				time_num = 0;
-				flag_num = 0;
+				flag_num = 30;
 				flag_master = 0;
 				flag_m_s = 1;
 			}
@@ -182,11 +194,23 @@ void Time0() interrupt 1						//定时器0中断服务函数
 	if(flag_m_s)
 	{		 
 		 master_to_slave();
-		 if(time_num == 100)
+		 if(time_num == 20)
 		 {
-		 	time_num = 0;
-			flag_m_s = 0;
-			flag_slave = 1;
+		 	flag_num2 --;
+			time_num = 0;
+			SMG_XS = Data[flag_num2];
+			smg_1 = 0;
+			smg_2 = 1;
+			delay(3);
+			smg_1 = 1;
+			smg_2 = 1;
+			if(flag_num2 == 0)
+			{
+				time_num = 0;
+				flag_m_s = 0;
+				flag_slave = 1;	
+				flag_num2 = 5;
+			}
 		 }
 	}
 	if(flag_slave)
@@ -195,11 +219,11 @@ void Time0() interrupt 1						//定时器0中断服务函数
 		  if(time_num == 20)//1s
 		 {
 		 	time_num = 0;
-		 	flag_num ++;
-			 if(flag_num == 60)
+		 	flag_num --;
+			 if(flag_num == 0)
 			 {
 			 	time_num = 0;
-				flag_num = 0;
+				flag_num = 30;
 				flag_slave = 0;
 				flag_s_m = 1;
 			 }
@@ -208,11 +232,23 @@ void Time0() interrupt 1						//定时器0中断服务函数
 	if(flag_s_m)
 	{		 
 		 slave_to_master();
-		 if(time_num == 100)
+		 if(time_num == 20)
 		 {
-		 	time_num = 0;
-			flag_s_m = 0;
-			flag_master = 1;
+		 	flag_num2 --;
+			time_num = 0;
+			SMG_XS = Data[flag_num2];
+			smg_1 = 0;
+			smg_2 = 1;
+			delay(3);
+			smg_1 = 1;
+			smg_2 = 1;
+			if(flag_num2 == 0)
+			{
+			 	time_num = 0;
+				flag_s_m = 0;
+				flag_master = 1;
+				flag_num2 = 5;
+			}
 		 }
 	}
 
