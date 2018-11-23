@@ -247,7 +247,7 @@ void Time0() interrupt 1			//定时器0中断服务函数
 	{	 
 		south_north();	
 		master_or_slaver(flag_num1);
-		if(time_num == 20)//1s
+		if(time_num == 20)			//1s
 		{ 	
 			flag_num1 --;
 			time_num = 0;
@@ -281,11 +281,11 @@ void Time0() interrupt 1			//定时器0中断服务函数
 	{		 
 		east_west();
 		master_or_slaver(flag_num3);
-		if(time_num == 20)//1s
+		if(time_num == 20)			//1s
 		 {
 		 	time_num = 0;
 		 	flag_num3 --;
-			 if(flag_num3 == 0)
+			 if(flag_num3 < 0)
 			 {
 			 	time_num = 0;
 				flag_num3 = 19;
@@ -302,7 +302,7 @@ void Time0() interrupt 1			//定时器0中断服务函数
 		 {
 		 	flag_num2 --;
 			time_num = 0;
-			if(flag_num2 == 0)
+			if(flag_num2 < 0)
 			{
 			 	time_num = 0;
 				flag_s_m = 0;
