@@ -25,8 +25,8 @@ sbit	smg_2 = P2^4;
 /***************定义  数码管*****************/
 #define	SMG_XS	P0				//数码管数据显示
 
-uchar code Data[]={0x18,0x7B,0x89,0x49,0x6A,0x4C,0x0C,0x79,0x08,0x48,0xEF};
-//定义数组  数码管   0    1    2    3    4    5    6    7    8    9    -
+uchar code Data[]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f,0x77};
+//定义数组  数码管   0    1    2    3    4    5    6    7    8    9    A
 uchar time_cl = 0;				//定义时间控制标志位  取0
 uchar time_num = 0;				//计数初始值
 uchar flag_master = 1;
@@ -42,15 +42,15 @@ void slave_to_master();		    //支路转到主干5s（支路黄灯）
 void Time0_init();				//定时器0初始化
 
 void main()
-{	smg_1 = 1;
+{
+	smg_1 = 1;
 	smg_2 = 1;
 	Time0_init();
 	SMG_XS=Data[10];
 	delay(300);
- while(1)
- {
- 	;
- }
+	 while(1)
+	 {			 
+	 }
 }
 
 
@@ -142,50 +142,47 @@ void slave_to_master()
 	s_g = 1;
 }
 
-void Time0_init()				//定时器0初始化函数
+void Time0_init()				    //定时器0初始化函数
 {
 	TMOD = 0x01;					//定时器0为方式1
 	TL0 = (65536-50000)%256;
 	TH0 = (65536-50000)/256;		//12M晶振 定时时间50ms
 	ET0 = 1;						//开定时器0中断
-	EA = 1;						//开总中断
+	EA = 1;						    //开总中断
 	TR0 = 1;						//启动定时器0
 }
 
 
 
-void Time0() interrupt 1						//定时器0中断服务函数
+void Time0() interrupt 1					//定时器0中断服务函数
 {
-	static uchar flag_num2 = 5;
-	static uchar flag_num = 30;
-//	uchar m_s_time = 0;
-//	uchar s_m_time = 0;
-//	uchar slave_time = 0;
+	static char flag_num2 = 4;
+	static char flag_num1 = 29;
 
-	TH0 = (65536-50000)/256;						//重新载装初值,设置50ms中断一次
+	TH0 = (65536-50000)/256;				//重新载装初值,设置50ms中断一次
 	TL0 = (65536-50000)%256;
-	time_num ++;									//时间基数加1
-	if(flag_master) // 主干
+	time_num ++;							//时间基数加1
+	if(flag_master)    						// 主干
 	{	 
-		 south_north();
-		 if(time_num == 20)//1s
-		 {
-		 	smg_1 = 1;
-			smg_2 = 1;
-		 	time_num = 0;
-			flag_num --;
-			SMG_XS = Data[flag_num/10];
-			//smg_2 = 0;
-			delay(30);  
-			smg_2 = 1;
-			SMG_XS = Data[flag_num%10];
-			smg_1 = 0;
-			delay(30); 	
-			smg_1 = 1;
-			if(flag_num == 0)
+		south_north();	
+	 	smg_1 = 0;
+		SMG_XS = Data[flag_num1/10];
+		delay(3);
+		smg_1 = 1; 
+
+		smg_2 = 0;
+		SMG_XS = Data[flag_num1%10];
+		delay(3); 	
+		smg_2 = 1;
+
+		if(time_num == 20)//1s
+		{ 	
+			flag_num1 --;
+			time_num = 0;
+			if(flag_num1 < 0)
 			{
 				time_num = 0;
-				flag_num = 30;
+				flag_num1 = 29;
 				flag_master = 0;
 				flag_m_s = 1;
 			}
@@ -193,37 +190,51 @@ void Time0() interrupt 1						//定时器0中断服务函数
 	}
 	if(flag_m_s)
 	{		 
-		 master_to_slave();
+		master_to_slave();
+		smg_1 = 0;
+		SMG_XS = Data[flag_num2/10];
+		delay(3);
+		smg_1 = 1; 
+	
+		smg_2 = 0;
+		SMG_XS = Data[flag_num2%10];
+		delay(3); 	
+		smg_2 = 1;
+
 		 if(time_num == 20)
 		 {
-		 	flag_num2 --;
-			time_num = 0;
-			SMG_XS = Data[flag_num2];
-			smg_1 = 0;
-			smg_2 = 1;
-			delay(3);
-			smg_1 = 1;
-			smg_2 = 1;
-			if(flag_num2 == 0)
+			 flag_num2 --;
+			 time_num = 0;
+			if(flag_num2 < 0)
 			{
 				time_num = 0;
 				flag_m_s = 0;
 				flag_slave = 1;	
-				flag_num2 = 5;
+				flag_num2 = 4;
 			}
 		 }
 	}
 	if(flag_slave)
 	{		 
-		 east_west();
+		east_west();
+		smg_1 = 0;
+		SMG_XS = Data[flag_num1/10];
+		delay(3);
+		smg_1 = 1; 
+
+		smg_2 = 0;
+		SMG_XS = Data[flag_num1%10];
+		delay(3); 	
+		smg_2 = 1;
+
 		  if(time_num == 20)//1s
 		 {
 		 	time_num = 0;
-		 	flag_num --;
-			 if(flag_num == 0)
+		 	flag_num1 --;
+			 if(flag_num1 == 0)
 			 {
 			 	time_num = 0;
-				flag_num = 30;
+				flag_num1 = 29;
 				flag_slave = 0;
 				flag_s_m = 1;
 			 }
@@ -231,23 +242,27 @@ void Time0() interrupt 1						//定时器0中断服务函数
 	}
 	if(flag_s_m)
 	{		 
-		 slave_to_master();
+		slave_to_master();
+		smg_1 = 0;
+		SMG_XS = Data[flag_num2/10];
+		delay(3);
+		smg_1 = 1; 
+	
+		smg_2 = 0;
+		SMG_XS = Data[flag_num2%10];
+		delay(3); 	
+		smg_2 = 1;
+
 		 if(time_num == 20)
 		 {
 		 	flag_num2 --;
 			time_num = 0;
-			SMG_XS = Data[flag_num2];
-			smg_1 = 0;
-			smg_2 = 1;
-			delay(3);
-			smg_1 = 1;
-			smg_2 = 1;
 			if(flag_num2 == 0)
 			{
 			 	time_num = 0;
 				flag_s_m = 0;
 				flag_master = 1;
-				flag_num2 = 5;
+				flag_num2 = 4;
 			}
 		 }
 	}
