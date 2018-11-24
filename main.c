@@ -2,6 +2,7 @@
 #define	uint unsigned int
 #define uchar unsigned char
 
+/*
 sbit    n_r = P1^2;				//北面  红灯
 sbit    n_y = P1^1;				//北面  黄灯
 sbit    n_g = P1^0;				//北面	绿灯
@@ -20,6 +21,26 @@ sbit    e_g = P3^5;				//东面  绿灯
 
 sbit	smg_1 = P2^6;			//数码管1
 sbit	smg_2 = P2^7;		    //数码管2
+*/
+
+sbit    n_r = P2^5;				//北面  红灯
+sbit    n_y = P2^4;				//北面  黄灯
+sbit    n_g = P2^3;				//北面	绿灯
+
+sbit    s_r = P3^7;				//南面	红灯
+sbit    s_y = P3^6;				//南面	黄灯
+sbit	s_g = P3^5;				//南面	绿灯
+
+sbit    w_r = P2^0;				//西面	红灯
+sbit    w_y = P2^1;				//西面	黄灯
+sbit    w_g = P2^2;				//西面	绿灯
+
+sbit    e_r = P1^2;				//东面  红灯
+sbit    e_y = P1^1;				//东面	黄灯
+sbit    e_g = P1^0;				//东面  绿灯
+
+sbit	smg_1 = P2^7;			//数码管1
+sbit	smg_2 = P2^6;		    //数码管2
 sbit	key = P3^2;				//开始暂停按键
 
 #define	SMG_XS	P0				//数码管数据显示（共阴数码管）
@@ -106,11 +127,11 @@ void east_west()
 //主干转到支路5s(主干黄灯)
 void master_to_slave()
 {
-	e_r = 1;
+	e_r = 0;
 	e_y = 1;
 	e_g = 1;
 
-	w_r = 1;
+	w_r = 0;
 	w_y = 1;
 	w_g = 1;
 
@@ -134,11 +155,11 @@ void slave_to_master()
 	w_y = 0;
 	w_g = 1;
 
-    n_r = 1;
+    n_r = 0;
 	n_y = 1;
 	n_g = 1;
 
-	s_r = 1;
+	s_r = 0;
 	s_y = 1;
 	s_g = 1;
 }
