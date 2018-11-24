@@ -1,0 +1,21 @@
+Field=Comment~String~Comment~100|Field=Description~String~Description~100|Field=Designator~String~Designator~100|Field=Footprint~String~Footprint~100|Field=LibRef~String~LibRef~100|Field=Quantity~Integer~Quantity~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~TrafficLight.PrjPCB|ReportField=ProjectFullPath~F:\大三\单片机课设\PCB工程\TrafficLight.PrjPCB|ReportField=Title~Bill of Materials For Project [TrafficLight.PrjPCB] (No PCB Document Selected)|ReportField=TotalQuantity~41|ReportField=ReportTime~16:09:38|ReportField=ReportDate~2018/11/24|ReportField=ReportDateTime~2018/11/24 16:09:38|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=Address1~|ReportField=Address2~|ReportField=Address3~|ReportField=Address4~|ReportField=ApprovedBy~|ReportField=Author~|ReportField=CheckedBy~|ReportField=CompanyName~|ReportField=CurrentDate~2018/11/24|ReportField=CurrentTime~16:09:35|ReportField=Date~|ReportField=DocumentFullPathAndName~F:\大三\单片机课设\PCB工程\trafficlight.SchDoc|ReportField=DocumentName~trafficlight.SchDoc|ReportField=DocumentNumber~|ReportField=DrawnBy~|ReportField=Engineer~|ReportField=ImagePath~|ReportField=ModifiedDate~2018/11/24|ReportField=Organization~|ReportField=ProjectName~TrafficLight.PrjPCB|ReportField=Revision~|ReportField=Rule~|ReportField=SheetNumber~|ReportField=SheetTotal~|ReportField=Time~|ReportField=Title~|ReportField=DataSourceFileName~TrafficLight.PrjPCB|ReportField=DataSourceFullPath~F:\大三\单片机课设\PCB工程\TrafficLight.PrjPCB
+电解电容|Capacitor|C1|D50V10UF|电解电容|1
+33p|Capacitor|C2, C3|D104|普通电容|2
+B_G||D1|LED|LED|1
+B_Y||D2|LED|LED|1
+B_R||D3|LED|LED|1
+X_G||D4|LED|LED|1
+D_R||D5|LED|LED|1
+X_Y||D6|LED|LED|1
+D_Y||D7|LED|LED|1
+X_R||D8|LED|LED|1
+D_G||D9|LED|LED|1
+N_R||D10|LED|LED|1
+N_Y||D11|LED|LED|1
+N_G||D12|LED|LED|1
+YELLOWCC|Common Cathhode Seven-Segment Display, Right Hand Decimal|DS1|0.5INCH-DISP|YELLOWCC|1
+KEY||key1, key2|6X6X?|KEY|2
+Header 4|Header, 4-Pin|P1|SIP4|Header 4|1
+10K||R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, R15, R16, R17, R19, R20, R21|AXIAL0.4|RES|20
+STC89C52RC||U1|DIP40C|AT89C51|1
+XTAL||Y1|晶振|XTAL|1
