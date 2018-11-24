@@ -10,16 +10,16 @@ sbit    s_r = P2^0;				//南面	红灯
 sbit    s_y = P2^1;				//南面	黄灯
 sbit	s_g = P2^2;				//南面	绿灯
 
-sbit    w_r = P2^5;				//西面	红灯
-sbit    w_y = P2^6;				//西面	黄灯
-sbit    w_g = P2^7;				//西面	绿灯
+sbit    w_r = P2^3;				//西面	红灯
+sbit    w_y = P2^4;				//西面	黄灯
+sbit    w_g = P2^5;				//西面	绿灯
 
 sbit    e_r = P3^7;				//东面  红灯
 sbit    e_y = P3^6;				//东面	黄灯
 sbit    e_g = P3^5;				//东面  绿灯
 
-sbit	smg_1 = P2^3;			//数码管1
-sbit	smg_2 = P2^4;		    //数码管2
+sbit	smg_1 = P2^6;			//数码管1
+sbit	smg_2 = P2^7;		    //数码管2
 sbit	key = P3^2;				//开始暂停按键
 
 #define	SMG_XS	P0				//数码管数据显示（共阴数码管）
